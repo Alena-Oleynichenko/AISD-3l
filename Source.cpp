@@ -112,18 +112,7 @@ public:
 		}
 		table.pop_back();
 	}
-	void Print()
-	{
-		for (size_t i = 0; i < table.size(); i++)
-		{
-			std::cout << table[i].data << ": {";
-			for (size_t j = 0; j < table[i].dest.size(); j++)
-			{
-				std::cout << table[i].dest[j].dest << "(" << table[i].dest[j].edge << ")";
-			}
-			std::cout << "}" << std::endl;
-		}
-	}
+	
 	void breadth(TVertex _s)
 	{
 		for (size_t i = 0; i < table.size(); i++)
@@ -205,16 +194,16 @@ int main()
 	first.add_v(3);
 	first.add_v(4);
 	first.add_v(5);
-	first.add_e(1, 2, 1);
-	first.add_e(2, 3, 1);
+	first.add_e(1, 2, 15);
+	first.add_e(2, 3, 16);
 	first.add_e(1, 5, 4);
 	first.add_e(4, 5, 4);
 	first.add_e(3, 1, 6);
 	first.add_e(4, 1, 1);
 	first.delete_e(1, 5);
-	first.Belman(1, 4);
+	first.Belman(1, 3);
 	std::cout << "\n";
-	first.breadth(1);
+	first.breadth(2);
 	graph<int, int> second;
 	second.add_v(6);
 	second.add_v(7);
@@ -223,5 +212,6 @@ int main()
 		std::cout << "\n";
 		std::cout << "Yes";
 	}
+	else { std::cout << "no"; }
 	return 0;
 }
