@@ -130,23 +130,67 @@ public:
 		{
 			table[i].color = false;
 		}
-		std::queue<vertex> q;
-		vertex s = table[return_index(_s)];
-		q.push(s);
-		s.color = true;
-		while (!q.empty()) {
-			vertex u = q.front();
-			q.pop();
+		std::queue<vertex> temp;
+		vertex tmp = table[return_index(_s)];
+		temp.push(tmp);
+		tmp.color = true;
+		while (!temp.empty()) {
+			vertex u = temp.front();
+			temp.pop();
 			for (auto elem : u.dest) {
 				vertex& v = table[elem.dest];
 				if (v.color == false) {
 					v.color = true;
-					q.push(v);
+					temp.push(v);
 				}
 			}
 			std::cout << u.data;
 		}
 	}
+	void Belman(TVertex _s, TVertex _d)
+	{
+		if (return_index(_s) == -1 || return_index(_d) == -1) throw "Vertexs not exist";
+		std::vector<double> d(table.size());
+		for (size_t i = 0; i < table.size(); i++)
+		{
+			d[i] = INFINITY;
+		}
+		d[return_index(_s)] = 0;
+		std::vector<std::vector<TVertex>> way(table.size());
+		for (size_t i = 0; i < table.size(); i++)
+		{
+			for (size_t j = 0; j < table[i].dest.size(); j++)
+			{
+				if (d[i] + static_cast<double>(table[i].dest[j].edge) < d[table[i].dest[j].dest])
+				{
+					d[table[i].dest[j].dest] = d[i] + static_cast<double>(table[i].dest[j].edge);
+					way[table[i].dest[j].dest] = way[i];
+					way[table[i].dest[j].dest].push_back(table[i].id_v + 1);
+				}
+			}
+		}
+		if (d[return_index(_s)] != 0)
+		{
+			throw"ifinity cickle!!!";
+		}
+		for (size_t i = 0; i < table.size(); i++)
+		{
+			way[i].push_back(table[i].id_v + 1);
+		}
+		for (size_t j = 0; j < way[return_index(_d)].size(); j++)
+		{
+			std::cout << way[return_index(_d)][j] << "->";
+		}
+		std::cout << "end" << std::endl;
+
+		if (d[return_index(_d)] == INFINITY)
+		{
+			std::cout << _s << "->" << _d << "=" << "No way";
+		}
+		else std::cout << _s << "->" << _d << "=" << d[return_index(_d)];
+
+	}
+
 
 
 };
@@ -168,7 +212,7 @@ int main()
 	first.add_e(3, 1, 6);
 	first.add_e(4, 1, 1);
 	first.delete_e(1, 5);
-	//first.Bellman_Ford(1, 2);
+	first.Belman(1, 4);
 	std::cout << "\n";
 	first.breadth(1);
 	graph<int, int> second;
