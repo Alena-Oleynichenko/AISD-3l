@@ -44,7 +44,7 @@ public:
 		}
 		else throw "This vertex exists!";
 	}
-	void add_e(TVertex _s, TVertex _dest, TEdge _edge) // добавить ребро
+	void add_e(TVertex _s, TVertex _dest, TEdge _edge) 
 	{
 		int tmp_s_id = return_index(_s);
 		int tmp_dest_id = return_index(_dest);
@@ -55,7 +55,7 @@ public:
 		New_Edge.edge = _edge;
 		table[tmp_s_id].dest.push_back(New_Edge);
 	}
-	void delete_e(TVertex _s, TVertex _dest) // удаление ребра
+	void delete_e(TVertex _s, TVertex _dest) 
 	{
 		int tmp_s_id = return_index(_s);
 		int tmp_dest_id = return_index(_dest);
@@ -73,7 +73,7 @@ public:
 			}
 		}
 	}
-	void delete_v(TVertex _s) // удаление вершины
+	void delete_v(TVertex _s) 
 	{
 		int index = return_index(_s);
 		if (index < 0) throw "Vertex does not exist";
